@@ -17,7 +17,7 @@ Keras implementation of Faster R-CNN architecture: Towards Real-Time Object Dete
 - Only tensorflow backend is supported. Since the compile time in thenao version is high I have removed the theano support.
 - [train_frcnn](https://github.com/Abhijit-2592/Keras_object_detection/blob/master/Faster_RCNN_API/train_frcnn.py): Use for training the model
 - The input data should be a text file in the following format
-
+    There is a new python script that can convert the demo data into this required format. 
     filepath,x1,y1,x2,y2,class_name
     The images must be manually split into `train` and `valid` sets and should be put inside **/train/** and **/valid/** folders. 
     

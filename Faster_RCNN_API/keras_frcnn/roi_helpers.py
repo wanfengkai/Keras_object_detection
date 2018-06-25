@@ -211,7 +211,7 @@ def non_max_suppression_fast(boxes, probs, overlap_thresh, max_boxes=300):
         if len(pick) >= max_boxes:
             break
 
-    # return only the bounding boxes that were picked using the integer data type
+    # return only the bounding boxes that were picked using the integer train type
     boxes = boxes[pick].astype("int")
     probs = probs[pick]
     return boxes, probs

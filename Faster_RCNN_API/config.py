@@ -12,7 +12,7 @@ class Config:
 
         self.verbose = True
 
-        # setting for data augmentation
+        # setting for train augmentation
         self.use_horizontal_flips = False
         self.use_vertical_flips = False
         self.rot_90 = False

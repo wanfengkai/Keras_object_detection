@@ -23,7 +23,7 @@ def Measure_map(test_path,
     """Function to measure Mean Average prediction metric for object detection
 
     Keyword Arguments
-    test_path --str: Path to the .txt file of testing data (No default)
+    test_path --str: Path to the .txt file of testing train (No default)
     network_arc --object: the full faster rcnn network .py file passed as an object (no default)
     config_filename --str: Path to config file (No default)
     preprocessing_function --function: optional image preprocessing function (Default None)
@@ -97,7 +97,7 @@ def Measure_map(test_path,
     with open(config_filename, 'rb') as f_in:
         C = pickle.load(f_in)
 
-    # turn off any data augmentation at test time
+    # turn off any train augmentation at test time
     C.use_horizontal_flips = False
     C.use_vertical_flips = False
     C.rot_90 = False

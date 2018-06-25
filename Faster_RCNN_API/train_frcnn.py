@@ -25,7 +25,7 @@ import math
 
 sys.setrecursionlimit(40000)
 
-def Train_frcnn(train_path, # path to the text file containing the data
+def Train_frcnn(train_path, # path to the text file containing the train
                 network_arch, # the full faster rcnn network architecture object
                 num_epochs, # num of epochs
                 output_weight_path, # path to save the model_all.weights as hdf5
@@ -79,9 +79,9 @@ def Train_frcnn(train_path, # path to the text file containing the data
                             The list can contain any combination of the above 4 only.
     tb_log_dir --str: path to log dir for tensorboard logging (Default 'log')
     num_rois --int: The number of rois to use at once (Default = 32)
-    horizontal_flips --bool: augment training data by horizontal flips (Default False)
-    vertical_flips --bool: augment training data by vertical flips (Default False)
-    rot_90 --bool: augment training data by 90 deg rotations (Default False)
+    horizontal_flips --bool: augment training train by horizontal flips (Default False)
+    vertical_flips --bool: augment training train by vertical flips (Default False)
+    rot_90 --bool: augment training train by 90 deg rotations (Default False)
     anchor_box_scales --list: The list of anchor box scales to use (Default [128,256,512])
     anchor_box ratios --list of list: The list of anchorbox aspect ratios to use (Default [[1, 1], [1./math.sqrt(2), 2./math.sqrt(2)], [2./math.sqrt(2), 1./math.sqrt(2)]])
     im_size --int: The size to resize the image (Default 600). This is the smallest side of Pascal VOC format
@@ -96,7 +96,7 @@ def Train_frcnn(train_path, # path to the text file containing the data
     classifier_min_overlap --float: (0,1) same as above but in final classifier (Default 0.1) (original implementation)
     classifier_max_overlap --float: (0,1) same as above (Default 0.5) (original implementation)
     rpn_nms_threshold --float :(0,1) The threshold above which to supress the bbox using Non max supression in rpn (Default 0.7)(from original implementation)
-    seed --int: To seed the random shuffling of training data (Default = 5000)
+    seed --int: To seed the random shuffling of training train (Default = 5000)
     
     Performing alternating training:
     - Use the train_rpn,train_final_classifier and train_base_nn boolean arguments to accomplish
@@ -123,7 +123,7 @@ def Train_frcnn(train_path, # path to the text file containing the data
     as of now the batch size = 1
     Prints loss = 0 for losses from model which is not being trained
     
-    TODO: The training is a bit slow because of the data generation step. Generate_data in multiple threads and queue them for faster training
+    TODO: The training is a bit slow because of the train generation step. Generate_data in multiple threads and queue them for faster training
     
     """
     check_list = ['rpn_cls','rpn_reg','final_cls','final_reg']
@@ -249,7 +249,7 @@ def Train_frcnn(train_path, # path to the text file containing the data
     num_epochs = int(num_epochs)
     iter_num = 0
     
-    # train and valid data generator
+    # train and valid train generator
     data_gen_train = data_generators.get_anchor_gt(train_imgs, classes_count, C, model_base, K.image_dim_ordering(), preprocessing_function ,mode='train')
     data_gen_val = data_generators.get_anchor_gt(val_imgs, classes_count, C, model_base,K.image_dim_ordering(), preprocessing_function ,mode='val')
 
@@ -565,4 +565,36 @@ def Train_frcnn(train_path, # path to the text file containing the data
     
     
     
-    
+from keras_frcnn import nn_arch_inceptionv3,nn_arch_resnet50,nn_arch_vgg16
+Train_frcnn(train_path='./new_text.txt', # path to the text file containing the train
+                network_arch=nn_arch_vgg16, # the full faster rcnn network architecture object
+                num_epochs=1, # num of epochs
+                output_weight_path='/home/frank/', # path to save the model_all.weights as hdf5
+                preprocessing_function = None,
+                config_filename="config.pickle",
+                input_weights_path=None,
+                train_rpn = True,
+                train_final_classifier = True,
+                train_base_nn = True,
+                losses_to_watch = ['rpn_cls','rpn_reg','final_cls','final_reg'],
+                tb_log_dir="log",
+                num_rois=32,
+                horizontal_flips=False,
+                vertical_flips=False,
+                rot_90=False,
+                anchor_box_scales=[128, 256, 512],
+                anchor_box_ratios=[[1, 1], [1./math.sqrt(2), 2./math.sqrt(2)], [2./math.sqrt(2), 1./math.sqrt(2)]],
+                im_size=600,
+                rpn_stride=16, # depends on network architecture
+                visualize_model=None,
+                verify_trainable = True,
+                optimizer_rpn = Adam(lr=1e-5),
+                optimizer_classifier = Adam(lr=1e-5),
+                validation_interval = 3,
+                rpn_min_overlap = 0.3,
+                rpn_max_overlap = 0.7,
+                classifier_min_overlap = 0.1,
+                classifier_max_overlap = 0.5,
+                rpn_nms_threshold = 0.7, # original implementation
+                seed=5000
+                )

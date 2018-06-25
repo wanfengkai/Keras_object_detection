@@ -31,7 +31,7 @@ def Test_frcnn(test_images_list,
     final_classification_threshold --float: (0,1) min threshold for accepting as a detection in final classifier (Default 0.8)                       
     
     OUTPUT:
-    returns the images with bboxes over layed using opencv, and a dataframe with data
+    returns the images with bboxes over layed using opencv, and a dataframe with train
     """
     nn = network_arch
 
@@ -43,7 +43,7 @@ def Test_frcnn(test_images_list,
     if num_rois:
         C.num_rois = int(num_rois)
 
-    # turn off any data augmentation at test time
+    # turn off any train augmentation at test time
     C.use_horizontal_flips = False
     C.use_vertical_flips = False
     C.rot_90 = False
