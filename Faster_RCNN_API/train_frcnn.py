@@ -331,7 +331,10 @@ def Train_frcnn(train_path, # path to the text file containing the train
                     if len(pos_samples) < C.num_rois//2:
                         selected_pos_samples = pos_samples.tolist()
                     else:
-                        selected_pos_samples = np.random.choice(pos_samples, C.num_rois//2, replace=False).tolist()
+                        try:
+                            selected_pos_samples = np.random.choice(pos_samples, C.num_rois//2, replace=False).tolist()
+                        except:
+                            print('shit')
                     try:
                         selected_neg_samples = np.random.choice(neg_samples, C.num_rois - len(selected_pos_samples), replace=False).tolist()
                     except:
@@ -344,9 +347,15 @@ def Train_frcnn(train_path, # path to the text file containing the train
                     selected_pos_samples = pos_samples.tolist()
                     selected_neg_samples = neg_samples.tolist()
                     if np.random.randint(0, 2):
-                        sel_samples = random.choice(neg_samples)
+                        try:
+                            sel_samples = random.choice(neg_samples)
+                        except:
+                            print('holy shit')
                     else:
-                        sel_samples = random.choice(pos_samples)
+                        try:
+                            sel_samples = random.choice(pos_samples)
+                        except:
+                            print('god damn shit')
 
                 if train_final_classifier:
                     loss_class = model_classifier.train_on_batch([X, X2[:, sel_samples, :]], [Y1[:, sel_samples, :], Y2[:, sel_samples, :]])
