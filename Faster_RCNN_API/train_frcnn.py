@@ -306,6 +306,7 @@ def Train_frcnn(train_path, # path to the text file containing the train
                 X2, Y1, Y2, IouS = roi_helpers.calc_iou(R, img_data, C, class_mapping)
 
                 if X2 is None:
+                    # X2 : image in ROI
                     rpn_accuracy_rpn_monitor.append(0)
                     rpn_accuracy_for_epoch.append(0)
                     continue
@@ -334,6 +335,7 @@ def Train_frcnn(train_path, # path to the text file containing the train
                     try:
                         selected_neg_samples = np.random.choice(neg_samples, C.num_rois - len(selected_pos_samples), replace=False).tolist()
                     except:
+
                         selected_neg_samples = np.random.choice(neg_samples, C.num_rois - len(selected_pos_samples), replace=True).tolist()
 
                     sel_samples = selected_pos_samples + selected_neg_samples
@@ -373,6 +375,7 @@ def Train_frcnn(train_path, # path to the text file containing the train
                 progbar.update(iter_num, [('rpn_cls', np.mean(losses[:iter_num, 0])), ('rpn_regr', np.mean(losses[:iter_num, 1])),
                                           ('detector_cls', np.mean(losses[:iter_num, 2])), ('detector_regr', np.mean(losses[:iter_num, 3]))])
 
+                # if iter_num%10 == 0:
                 if iter_num == epoch_length:
                     if train_rpn:
                         loss_rpn_cls = np.mean(losses[:, 0])
@@ -582,9 +585,9 @@ Train_frcnn(train_path='/home/frank/big_Od/clean_text.txt', # path to the text f
                 horizontal_flips=False,
                 vertical_flips=False,
                 rot_90=False,
-                anchor_box_scales=[128, 256, 512],
+                anchor_box_scales=[32, 64, 128],
                 anchor_box_ratios=[[1, 1], [1./math.sqrt(2), 2./math.sqrt(2)], [2./math.sqrt(2), 1./math.sqrt(2)]],
-                im_size=600,
+                im_size=256,
                 rpn_stride=16, # depends on network architecture
                 visualize_model=None,
                 verify_trainable = True,
