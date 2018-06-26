@@ -17,7 +17,7 @@ def Test_frcnn(test_images_list,
                config_filename,
                preprocessing_function = None,
                num_rois = None,
-               final_classification_threshold = 0.8):
+               final_classification_threshold = 0.1):
     
     """
     Test the object detection network
@@ -226,11 +226,22 @@ def Test_frcnn(test_images_list,
     
         
         list_of_all_images.append(cv2.cvtColor(img,cv2.COLOR_BGR2RGB))
+        cv2.imshow('bbox',img)
+        cv2.waitKey(200)
         df_list.append(df)
             
     final_df = pd.concat(df_list,ignore_index=True)
         
     return(list_of_all_images,final_df)
 
+import glob
 
-    
+test_image_list=glob.glob('../valid/imgs/*')
+from keras_frcnn import nn_arch_inceptionv3,nn_arch_resnet50,nn_arch_vgg16
+(list_of_all_images,final_df)=Test_frcnn(test_images_list=test_image_list,
+                network_arch=nn_arch_resnet50, # the full faster rcnn network architecture object
+                preprocessing_function = None,
+                config_filename="config.pickle",
+                num_rois=32,
+
+                )
