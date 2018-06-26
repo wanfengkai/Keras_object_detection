@@ -566,7 +566,7 @@ def Train_frcnn(train_path, # path to the text file containing the train
     
     
 from keras_frcnn import nn_arch_inceptionv3,nn_arch_resnet50,nn_arch_vgg16
-Train_frcnn(train_path='./new_text.txt', # path to the text file containing the train
+Train_frcnn(train_path='/home/frank/big_Od/clean_text.txt', # path to the text file containing the train
                 network_arch=nn_arch_resnet50, # the full faster rcnn network architecture object
                 num_epochs=100, # num of epochs
                 output_weight_path='/home/frank/wirght.hdf5', # path to save the model_all.weights as hdf5

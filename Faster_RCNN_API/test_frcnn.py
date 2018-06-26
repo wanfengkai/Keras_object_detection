@@ -236,7 +236,7 @@ def Test_frcnn(test_images_list,
 
 import glob
 
-test_image_list=glob.glob('../valid/imgs/*')
+test_image_list=glob.glob('/home/frank/big_Od/valid/img/*')
 from keras_frcnn import nn_arch_inceptionv3,nn_arch_resnet50,nn_arch_vgg16
 (list_of_all_images,final_df)=Test_frcnn(test_images_list=test_image_list,
                 network_arch=nn_arch_resnet50, # the full faster rcnn network architecture object
