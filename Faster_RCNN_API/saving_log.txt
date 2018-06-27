@@ -2,3 +2,15 @@
 Total loss decreased from inf to 0.014609934357416454 in epoch 1/100 in training, saving weights
 Total loss decreased from 0.014609934357416454 to 0.008983474396803704 in epoch 2/100 in training, saving weights
 Total loss decreased from 0.008983474396803704 to 0.005961366525103998 in epoch 3/100 in training, saving weights
+Total loss decreased from inf to 0.7667262457745736 in epoch 1/100 in training, saving weights
+Total loss decreased from 0.7667262457745736 to 0.18331473736728723 in epoch 2/100 in training, saving weights
+Total loss decreased from 0.18331473736728723 to 0.07203041267171856 in epoch 3/100 in training, saving weights
+Total loss decreased from inf to 0.8478573171816992 in epoch 3/100 in validation, saving weights
+Total loss decreased from 0.07203041267171856 to 0.05826041938249291 in epoch 4/100 in training, saving weights
+Total loss decreased from 0.05826041938249291 to 0.03874938120571502 in epoch 6/100 in training, saving weights
+Total loss decreased from 0.03874938120571502 to 0.027320068144632143 in epoch 7/100 in training, saving weights
+Total loss decreased from 0.027320068144632143 to 0.021653375208370598 in epoch 8/100 in training, saving weights
+Total loss decreased from 0.021653375208370598 to 0.017026791648071127 in epoch 10/100 in training, saving weights
+Total loss decreased from 0.017026791648071127 to 0.016221832922144536 in epoch 11/100 in training, saving weights
+Total loss decreased from 0.016221832922144536 to 0.011935536934386494 in epoch 15/100 in training, saving weights
+Total loss decreased from 0.011935536934386494 to 0.00989747830901778 in epoch 17/100 in training, saving weights
