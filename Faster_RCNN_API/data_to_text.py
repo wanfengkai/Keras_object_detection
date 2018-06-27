@@ -134,14 +134,16 @@ def split_label_files_wrt_test_folder(original_train_image_folder,original_test_
         copy2(os.path.join(original_label_path,labels),temp_path)
 
     # For test file
-    attempted_string=[]
+    # attempted_string=[]
+    # Set is more elegant than list here.
+    attempted_string=set()
     for img_name in os.listdir(valid_img_path):
         # get the first two number
         nn1, nn2 = img_name.split('.')[0].split('_')[0:2]
         name_str_pre = nn1+'_'+nn2
         if name_str_pre not in attempted_string:
             move(os.path.join(temp_path,name_str_pre+'.txt'),valid_label_path)
-            attempted_string.append(name_str_pre)
+            attempted_string.add(name_str_pre)
     # For train file just move the rest
     for lbl in os.listdir(temp_path):
         move(os.path.join(temp_path, lbl),train_label_path)
