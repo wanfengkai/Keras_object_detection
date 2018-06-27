@@ -114,29 +114,23 @@ def split_files_into_corresponding_folders(original_label_folder,new_folder,img_
 if __name__ == '__main__':
 
     # Only excute once
-    # new_folder = '/home/frank/big_Od'
-    # rmtree(new_folder)
-    # split_files_into_corresponding_folders(original_label_folder='/home/frank/OD/ShoushouCycleGAN/virtual2real/labels/unreal',
-    #                                        new_folder=new_folder,
-    #                                        img_folder='/home/frank/OD/ShoushouCycleGAN/virtual2real/virtual_img')
-    valid_path = '/home/frank/big_Od/valid'
-    train_path = '/home/frank/big_Od/train'
-    new_txt = '/home/frank/big_Od/new_text.txt'
+    # The new folder is the folder where You want to save all the splited training and valid data.
+    new_folder = '/home/frank/big_Od'
+    rmtree(new_folder)
+    #original_label_folder is the place where you stored the virtual label txts
+    #img_folder is where your virtual images are, which is just the ~/Virtual mentioned  in shoushoukanREADME
+    split_files_into_corresponding_folders(original_label_folder='/home/frank/OD/ShoushouCycleGAN/virtual2real/labels/unreal',
+                                           new_folder=new_folder,
+                                           img_folder='/home/frank/OD/ShoushouCycleGAN/virtual2real/virtual_img')
+    valid_path = os.path.join(new_folder,'valid')
+    train_path = os.path.join(new_folder,'train')
+    new_txt = os.path.join(new_folder,'new_txt.txt')
 
     get_txt_from_folder(new_txt=new_txt,path=train_path)
     get_txt_from_folder(new_txt=new_txt,path=valid_path)
 
     # Find that all the 300 frame is missing. So remove them.
-    clean_txt = '/home/frank/big_Od/clean_text.txt'
-    with open(clean_txt,'w+') as w:
-        writer = csv.writer(w)
-        with open(new_txt,'r+') as f:
-           reader = csv.reader(f)
-           for line in reader:
-               if '300' not in line[0]:
-                   writer.writerow(line)
-    # Replace
-    clean_txt = '/home/frank/big_Od/clean_text.txt'
+    clean_txt = os.path.join(new_folder,'clean_txt.txt')
     with open(clean_txt,'w+') as w:
         writer = csv.writer(w)
         with open(new_txt,'r+') as f:
