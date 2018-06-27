@@ -1,7 +1,7 @@
 import csv
 import os
 import numpy as np
-from shutil import copy2,rmtree
+from shutil import copy2,rmtree,move
 list_map=[
     ('01','holly shit'),
     ('02','larger shit'),
@@ -109,6 +109,42 @@ def split_files_into_corresponding_folders(original_label_folder,new_folder,img_
 
 
 
+def split_label_files_wrt_test_folder(original_train_image_folder,original_test_image_folder,
+                                      original_label_path,new_folder,temp_path):
+
+    # Create folders.
+    train_folder = os.path.join(new_folder,'train')
+    valid_folder = os.path.join(new_folder, 'valid')
+    train_label_path = os.path.join(train_folder,'label')
+    valid_label_path = os.path.join(valid_folder,'label')
+    train_img_path = os.path.join(train_folder,'img')
+    valid_img_path = os.path.join(valid_folder,'img')
+    mkdir_if_not_exists(train_label_path)
+    mkdir_if_not_exists(valid_label_path)
+    mkdir_if_not_exists(train_img_path)
+    mkdir_if_not_exists(valid_img_path)
+    # Copy all image files to coresponding folder.
+    for file in os.listdir(original_test_image_folder):
+        copy2(os.path.join(original_test_image_folder,file),valid_img_path)
+    for file in os.listdir(original_train_image_folder):
+        copy2(os.path.join(original_train_image_folder,file),train_img_path)
+
+    # find name pattern and split label txt files.
+    for labels in os.listdir(original_label_path):
+        copy2(os.path.join(original_label_path,labels),temp_path)
+
+    # For test file
+    attempted_string=[]
+    for img_name in os.listdir(valid_img_path):
+        # get the first two number
+        nn1, nn2 = img_name.split('.')[0].split('_')[0:2]
+        name_str_pre = nn1+'_'+nn2
+        if name_str_pre not in attempted_string:
+            move(os.path.join(temp_path,name_str_pre+'.txt'),valid_label_path)
+            attempted_string.append(name_str_pre)
+    # For train file just move the rest
+    for lbl in os.listdir(temp_path):
+        move(os.path.join(temp_path, lbl),train_label_path)
 
 
 if __name__ == '__main__':
@@ -117,14 +153,29 @@ if __name__ == '__main__':
     # The new folder is the folder where You want to save all the splited training and valid data.
     new_folder = '/home/frank/big_Od'
     rmtree(new_folder)
-    #original_label_folder is the place where you stored the virtual label txts
-    #img_folder is where your virtual images are, which is just the ~/Virtual mentioned  in shoushoukanREADME
-    split_files_into_corresponding_folders(original_label_folder='/home/frank/OD/ShoushouCycleGAN/virtual2real/labels/unreal',
-                                           new_folder=new_folder,
-                                           img_folder='/home/frank/OD/ShoushouCycleGAN/virtual2real/virtual_img')
+    # #original_label_folder is the place where you stored the virtual label txts
+    # #img_folder is where your virtual images are, which is just the ~/Virtual mentioned  in shoushoukanREADME
+    # split_files_into_corresponding_folders(original_label_folder='/home/frank/OD/ShoushouCycleGAN/virtual2real/labels/unreal',
+    #                                        new_folder=new_folder,
+    #                                        img_folder='/home/frank/OD/ShoushouCycleGAN/virtual2real/virtual_img')
+
+
     valid_path = os.path.join(new_folder,'valid')
     train_path = os.path.join(new_folder,'train')
     new_txt = os.path.join(new_folder,'new_txt.txt')
+
+    # Here is what you need to change the path
+
+    temp_path =  '/home/frank/OD_temp'
+    if not os.path.exists(temp_path):
+        os.makedirs(temp_path)
+    # Here you set the original TRaining Set
+    original_test_image_folder = 'TrainA'
+    # Here you set the original test Set.
+    original_label_path = 'TestB'
+    split_label_files_wrt_test_folder(original_test_image_folder,
+                                      original_label_path, new_folder, temp_path)
+
 
     get_txt_from_folder(new_txt=new_txt,path=train_path)
     get_txt_from_folder(new_txt=new_txt,path=valid_path)
