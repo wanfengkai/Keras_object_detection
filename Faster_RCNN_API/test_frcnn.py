@@ -239,7 +239,7 @@ import glob
 test_image_list=glob.glob('/home/frank/big_Od/train/img/02_02*')
 from keras_frcnn import nn_arch_inceptionv3,nn_arch_resnet50,nn_arch_vgg16
 (list_of_all_images,final_df)=Test_frcnn(test_images_list=test_image_list,
-                network_arch=nn_arch_resnet50, # the full faster rcnn network architecture object
+                network_arch=nn_arch_vgg16, # the full faster rcnn network architecture object
                 preprocessing_function = None,
                 config_filename="config.pickle",
                 num_rois=32,
