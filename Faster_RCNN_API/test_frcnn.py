@@ -35,7 +35,7 @@ def Test_frcnn(test_images_list,
     """
     nn = network_arch
 
-
+    i = 0
     assert "list" in str(type(test_images_list)),"test_images_list must be a list of paths to the test images"
 
     with open(config_filename, 'rb') as f_in:
@@ -226,7 +226,8 @@ def Test_frcnn(test_images_list,
     
         
         list_of_all_images.append(cv2.cvtColor(img,cv2.COLOR_BGR2RGB))
-        cv2.imshow('bbox',img)
+        cv2.imwrite('bbox_{}.png'.format(i),img)
+        i+=1
         cv2.waitKey(200)
         df_list.append(df)
             
