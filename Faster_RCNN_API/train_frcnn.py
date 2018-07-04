@@ -593,7 +593,7 @@ Train_frcnn(train_path='/home/frank/big_Od/clean_text.txt', # path to the text f
                 anchor_box_scales=[8, 16, 32],
                 anchor_box_ratios=[[1, 1], [1./math.sqrt(2), 2./math.sqrt(2)], [2./math.sqrt(2), 1./math.sqrt(2)]],
                 im_size=600,
-                rpn_stride=2, # make it smaller
+                rpn_stride=16, # make it smaller
                 visualize_model=None,
                 verify_trainable = True,
                 optimizer_rpn = Adam(lr=1e-5),
